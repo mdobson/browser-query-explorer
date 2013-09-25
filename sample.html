@@ -31,15 +31,18 @@
               var list_item = "<li>";
 
               if (props[0] != "") {
+                var filtered_entity = {};
                 for (var i = 0; i < props.length; i++) {
                   var prop_name = props[i];
                   var prop_value = entity.get(prop_name);
-                  list_item += "<p><b>"+prop_name+"</b>:"+prop_value+"</p>";
+                  filtered_entity[prop_name] = prop_value;
                 };
+                var prettyJson = JSON.stringify(filtered_entity, undefined, 2);
+                list_item += "<pre>"+prettyJson+"</pre>";
               } else {
                 //Some pretty printing magic.
                 var prettyJson = JSON.stringify(entity.get(), undefined, 2);
-                console.log(prettyJson);
+                
                 list_item += "<pre>"+prettyJson+"</pre>";
               }
               

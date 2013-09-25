@@ -13,8 +13,8 @@
   <script>  
     $(document).ready(function(){
       var apigee = new Apigee.Client({
-        orgName:"YOUR APIGEE.COM USERNAME",
-        appName:"YOUR APIGEE APP",
+        orgName:"mdobson",
+        appName:"sandbox",
         logging:true
       });
 
@@ -29,11 +29,20 @@
               var props = $("#properties").val().split(',');
               var entity = queried_collection.getNextEntity();
               var list_item = "<li>";
-              for (var i = 0; i < props.length; i++) {
-                var prop_name = props[i];
-                var prop_value = entity.get(prop_name);
-                list_item += "<p><b>"+prop_name+"</b>:"+prop_value+"</p>";
-              };
+
+              if (props[0] != "") {
+                for (var i = 0; i < props.length; i++) {
+                  var prop_name = props[i];
+                  var prop_value = entity.get(prop_name);
+                  list_item += "<p><b>"+prop_name+"</b>:"+prop_value+"</p>";
+                };
+              } else {
+                //Some pretty printing magic.
+                var prettyJson = JSON.stringify(entity.get(), undefined, 2);
+                console.log(prettyJson);
+                list_item += "<pre>"+prettyJson+"</pre>";
+              }
+              
               list_item += "</li>";
               $("#entity-list").append(list_item);
             }
